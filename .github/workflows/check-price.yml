@@ -1,0 +1,30 @@
+name: Crawlr Price Check
+
+on:
+  schedule:
+    # Τρέχει κάθε ώρα (το '0' σημαίνει στην αρχή της ώρας)
+    - cron: '0 * * * *'
+  workflow_dispatch: # Σου επιτρέπει να το τρέξεις χειροκίνητα για δοκιμή
+
+jobs:
+  check-price:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install crawlr
+        run: pip install crawlr
+
+      - name: Run price check
+        # Εδώ βάζεις την εντολή που έτρεχες και στον υπολογιστή σου.
+        # Αν το URL είναι διαφορετικό, άλλαξέ το.
+        run: crawlr watch "https://www.skroutz.gr/s/69484973/xiaomi-6-skoupa-rompot-me-optiki-chartografisi-aporrofisi-30000pa-leyki.html" --target 300
+        env:
+          # Εδώ παίρνει το μυστικό που φτιάξαμε στο Βήμα 2
+          CRAWLR_ALERT_NTFY: "https://ntfy.sh/${{ secrets.NTFY_TOPIC }}"
