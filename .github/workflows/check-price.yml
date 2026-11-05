@@ -20,6 +20,9 @@ jobs:
 
       - name: Install crawlr
         run: pip install crawlr
+        # Νέο βήμα: υποβάθμιση του selectolax σε έκδοση συμβατή με το crawlr
+      - name: Pin selectolax below 1.0
+        run: pip install "selectolax<1.0"
 
       - name: Run price check
         # Εδώ βάζεις την εντολή που έτρεχες και στον υπολογιστή σου.
